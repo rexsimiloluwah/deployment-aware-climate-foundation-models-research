@@ -1,0 +1,32 @@
+model: terramind_v1_large
+display_name: TerraMind-1.0 Large
+model_family: terramind
+is_foundation_model: true
+hf_repo: ibm-esa-geospatial/TerraMind-1.0-large
+checkpoint_file: TerraMind_v1_large.pt
+parameter_count_estimate: 950000000
+checkpoint_size_estimate: 3.79GB
+machine_type: a2-ultragpu-1g
+precision: bf16
+modalities:
+  - sentinel_1
+  - sentinel_2
+  - landsat
+  - dem
+  - climate_or_auxiliary_modalities
+task_fit:
+  sen1floods11_ghana: high
+  ftw_africa: medium
+selection_role: scaling_stress_test
+selection_rationale: >-
+  Larger TerraMind variant used to stress-test the evaluation harness and ask
+  whether larger EO foundation models justify their additional adaptation and
+  deployment cost under limited labels.
+integration_priority: 3
+integration_status: terratorch_loader_ready_for_gcp_validation
+notes: >-
+  Use after TerraMind-base works. Hugging Face repo is reachable and exposes
+  README.md and TerraMind_v1_large.pt. The harness now loads this through
+  TerraTorch's BACKBONE_REGISTRY and validates it in the GCP full-pipeline
+  notebook. This is the model that makes the efficiency story sharper,
+  especially for GPU hours, peak VRAM, latency, and Pareto plots.

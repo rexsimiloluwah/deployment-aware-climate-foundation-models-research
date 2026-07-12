@@ -1,0 +1,23 @@
+run_id: local_ftw_pilot
+seed: 1234
+device: auto
+
+datasets:
+  - ftw_africa
+
+models:
+  - tiny_segmentation_cnn_local
+
+adaptation:
+  methods:
+    - linear_probe
+    - lora
+
+label_budgets: [0.10, 0.25, 1.00]
+seeds: [1234]
+image_size: 128
+max_epochs: 1
+batch_size: 2
+num_workers: 0
+limit_train_batches: 8
+limit_val_batches: 8

@@ -1,0 +1,9 @@
+model: smoke_toy
+display_name: Toy Smoke-Test Model
+model_family: smoke_test
+is_foundation_model: false
+hf_repo: null
+machine_type: local
+precision: fp32
+notes: Tiny synthetic MLP/CNN used only to validate data loading, training, metrics, and logging before Earth foundation models are integrated.
+

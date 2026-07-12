@@ -1,0 +1,27 @@
+run_id: geoai_deployment_readiness_v1
+seed: 1234
+device: auto
+
+datasets:
+  - sen1floods11_ghana
+  - ftw_africa
+
+models:
+  - prithvi_eo_v2_300m
+  - terramind_v1_base
+  - terramind_v1_large
+
+adaptation:
+  methods:
+    - linear_probe
+    - lora
+  lora:
+    rank: 8
+    alpha: 16
+    dropout: 0.05
+
+label_budgets: [0.05, 0.10, 0.25, 1.00]
+seeds: [1234, 2026, 777]
+max_epochs: 5
+batch_size: 16
+num_workers: 4

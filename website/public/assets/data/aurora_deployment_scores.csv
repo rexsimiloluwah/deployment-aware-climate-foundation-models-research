@@ -1,0 +1,3 @@
+model,adapter,mean_rmse_relative_to_persistence,inference_seconds_mean,peak_memory_gb_mean,total_params,trainable_params,trainable_fraction
+aurora_large,pretrained,0.3696537706780068,52.039442732155976,19.054083347320557,1259150992,0,0
+aurora_small,pretrained,0.49751485931377915,13.555568400015318,8.675357818603516,112797584,0,0

@@ -1,0 +1,5 @@
+id,split,array_path,label
+field_0001,train,arrays/field_0001.npy,maize
+field_0002,val,arrays/field_0002.npy,cassava
+field_0003,test,arrays/field_0003.npy,beans
+

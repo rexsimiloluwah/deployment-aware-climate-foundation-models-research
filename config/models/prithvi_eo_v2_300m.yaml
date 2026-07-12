@@ -1,0 +1,30 @@
+model: prithvi_eo_v2_300m
+display_name: Prithvi-EO-2.0 300M
+model_family: prithvi_eo
+is_foundation_model: true
+hf_repo: ibm-nasa-geospatial/Prithvi-EO-2.0-300M
+checkpoint_file: Prithvi_EO_V2_300M.pt
+parameter_count_estimate: 300000000
+checkpoint_size_estimate: unknown
+machine_type: a2-highgpu-1g
+precision: bf16
+modalities:
+  - hls
+  - sentinel_2
+  - landsat
+task_fit:
+  sen1floods11_ghana: high
+  ftw_africa: medium
+selection_role: primary
+selection_rationale: >-
+  Primary model because it is Earth-observation specific, documented, open,
+  trained on Harmonized Landsat/Sentinel-2 time series, and directly aligned
+  with African agriculture, crop mapping, land monitoring, and resilience tasks.
+integration_priority: 1
+integration_status: mac_forward_smoke_ready
+notes: >-
+  Start here. The Hugging Face repo is reachable and exposes README.md,
+  config.json, inference.py, prithvi_mae.py, requirements.txt, and
+  Prithvi_EO_V2_300M.pt. The local harness can now instantiate the real model,
+  load the checkpoint, adapt FTW batches for a Mac smoke test, and run a frozen
+  backbone plus segmentation-head pilot.

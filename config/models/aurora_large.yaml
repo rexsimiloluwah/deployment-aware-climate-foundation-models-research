@@ -1,0 +1,35 @@
+model: aurora_large
+display_name: Aurora Large
+model_family: aurora
+is_foundation_model: true
+package_import: aurora
+hf_repo: microsoft/aurora
+checkpoint_file: aurora-0.25-finetuned.ckpt
+parameter_count_estimate: 1300000000
+checkpoint_size_estimate: unknown
+machine_type: gpu_l4_or_better
+precision: bf16
+task_type: weather_forecasting
+modalities:
+  - atmospheric_state
+  - surface_state
+  - static_fields
+forecasting:
+  native_resolution_degrees: 0.25
+  input_time_steps: 2
+  output_step_hours: 6
+  known_public_size_note: >-
+    The Aurora paper describes Aurora as a 1.3B parameter Earth-system
+    foundation model. Exact checkpoint size should be measured after loading.
+adaptation:
+  methods:
+    - pretrained
+selection_role: forecasting_large_baseline
+selection_rationale: >-
+  Larger Aurora-family baseline for testing whether a LoRA-adapted compact
+  model is practically competitive with a much larger pretrained model.
+integration_priority: 2
+integration_status: config_ready_package_required
+notes: >-
+  Use as a larger Aurora-family inference baseline first. Full fine-tuning is
+  out of scope for the lightning-talk experiment.

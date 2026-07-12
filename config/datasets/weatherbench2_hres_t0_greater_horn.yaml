@@ -1,0 +1,78 @@
+name: weatherbench2_hres_t0_greater_horn
+display_name: WeatherBench2 HRES T0 Greater Horn of Africa
+region: Greater Horn of Africa
+climate_theme: Regional weather forecasting for drought, flood, heat, wind, and early-warning applications
+task_type: weather_forecasting
+source_dataset: WeatherBench2 HRES T0
+input:
+  resolution_degrees: 0.25
+  expected_layout: xarray_dataset
+  description: HRES T0 global atmospheric and surface analysis fields, scored over the Greater Horn of Africa.
+region_bounds:
+  latitude_min: -12.0
+  latitude_max: 23.0
+  longitude_min: 21.0
+  longitude_max: 52.0
+  countries_context:
+    - Djibouti
+    - Eritrea
+    - Ethiopia
+    - Kenya
+    - Somalia
+    - South Sudan
+    - Sudan
+    - Uganda
+data:
+  loader: weatherbench2_xarray
+  uri_env: WEATHERBENCH2_HRES_T0_URI
+  uri: gs://weatherbench2/datasets/hres_t0/2016-2022-6h-1440x721.zarr
+  static_uri_env: AURORA_STATIC_FIELDS_URI
+  static_uri: data/weatherbench2/hres_t0_global/static.nc
+  storage_options:
+    token: anon
+  time_coord: time
+  latitude_coord_candidates: [latitude, lat]
+  longitude_coord_candidates: [longitude, lon]
+  level_coord_candidates: [level, pressure_level]
+  cache_dir: data/weatherbench2/hres_t0_greater_horn
+  allow_synthetic_fallback: false
+splits:
+  train:
+    start: "2020-01-01"
+    end: "2021-12-31"
+  val:
+    start: "2022-01-01"
+    end: "2022-06-30"
+  test:
+    start: "2022-07-01"
+    end: "2022-12-31"
+forecasting:
+  lead_times_hours: [6, 12, 18, 24, 30, 36, 42, 48]
+  surface_variables:
+    - 2m_temperature
+    - 10m_u_component_of_wind
+    - 10m_v_component_of_wind
+    - mean_sea_level_pressure
+  atmospheric_variables:
+    geopotential: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]
+    temperature: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]
+    u_component_of_wind: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]
+    v_component_of_wind: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]
+    specific_humidity: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]
+metrics:
+  primary: weighted_rmse
+  secondary:
+    - mae
+    - inference_time
+    - peak_memory
+    - model_size
+readiness:
+  status: public_gcs_uri_configured_static_era5_required
+  required_access:
+    - WeatherBench2 HRES T0 Zarr or NetCDF path
+    - Aurora package and checkpoints
+  notes: >-
+    The HRES T0 dynamic fields are read from the public WeatherBench2 GCS Zarr
+    path by default. Static variables required by Aurora (geopotential,
+    land-sea mask, soil type) still need to be downloaded from ERA5/CDS or
+    supplied as a local NetCDF file.

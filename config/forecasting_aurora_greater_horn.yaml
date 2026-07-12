@@ -1,0 +1,38 @@
+run_id: aurora_greater_horn_forecasting_v1
+seed: 1234
+device: auto
+
+dataset: weatherbench2_hres_t0_greater_horn
+
+models:
+  - aurora_small
+  - aurora_large
+
+adaptation:
+  comparisons:
+    - model: aurora_small
+      adapter: pretrained
+    - model: aurora_small
+      adapter: lora
+    - model: aurora_large
+      adapter: pretrained
+  lora:
+    rank: 16
+    alpha: 4
+    dropout: 0.0
+
+forecasting:
+  lead_times_hours: [6, 12, 24, 48]
+  variables:
+    - 2m_temperature
+    - 10m_u_component_of_wind
+    - 10m_v_component_of_wind
+    - mean_sea_level_pressure
+  max_initialization_times: 16
+  batch_size: 1
+  precision: bf16
+
+outputs:
+  artifact_dir: artifacts/aurora_greater_horn_v1
+  results_file: results.jsonl
+  readiness_file: readiness.json

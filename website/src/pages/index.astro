@@ -1,0 +1,497 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Deployable Earth Foundation Models for African Climate Resilience";
+const description =
+  "Deployment-aware evaluation of Earth foundation models for African climate resilience across Earth observation and weather forecasting.";
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const asset = (path: string) => `${base}${path.replace(/^\//, "")}`;
+const githubUrl = "https://github.com/rexsimiloluwah/deployment-aware-climate-foundation-models-research";
+---
+
+<BaseLayout title={title} description={description}>
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="hero-kicker">Deployment-aware Earth foundation models</p>
+          <h1>Deployable Earth Foundation Models for African Climate Resilience</h1>
+          <p class="lead">
+            Under African climate resilience constraints, which adaptation strategy is accurate
+            enough, cheap enough, and realistic enough to use?
+          </p>
+          <div class="hero-actions" aria-label="Page shortcuts">
+            <a class="button primary" href="#results">
+              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3v18h18" />
+                <path d="m7 15 4-4 3 3 5-6" />
+              </svg>
+              <span>View Results</span>
+            </a>
+            <a class="button" href="#framework">
+              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <path d="M14 17h7" />
+                <path d="M17.5 14v7" />
+              </svg>
+              <span>Framework</span>
+            </a>
+            <a class="button" href={githubUrl}>
+              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                <path d="M9 18c-4.51 2-5-2-7-2" />
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <button class="button paper-button" type="button" disabled>
+              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                <path d="M8 13h8" />
+                <path d="M8 17h5" />
+              </svg>
+              <span>Paper</span>
+              <span class="button-pill">WIP</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Climate resilience research visualization">
+          <img
+            src={asset("/assets/images/hero_img.png")}
+            alt="Illustration of African climate resilience, Earth observation, and model deployment trade-offs."
+            loading="eager"
+          />
+        </div>
+      </div>
+    </section>
+
+    <nav class="section-nav" aria-label="Research page sections">
+      <a href="#question">Research Question</a>
+      <a href="#framework">Framework</a>
+      <a href="#experiments">Experiments</a>
+      <a href="#results">Results</a>
+      <a href="#discussion">Discussion</a>
+      <a href="#references">References</a>
+    </nav>
+
+    <section class="section" id="question">
+      <div class="section-heading">
+        <p class="eyebrow">Research Question</p>
+        <h2>How should Earth foundation models be adapted for African climate resilience tasks when labels, compute, and deployment resources are limited?</h2>
+      </div>
+      <div class="question-panel">
+        <p class="question-lead">
+          This project asks whether lightweight adaptation methods can deliver enough performance
+          for African climate datasets, or whether heavier methods such as Low-Rank Adaptation
+          (LoRA) justify their extra memory, training time, and engineering cost.
+        </p>
+        <div class="question-points">
+          <div>
+            <strong>What we test</strong>
+            <p>Earth observation (EO) field-boundary segmentation and regional weather forecasting over African datasets.</p>
+          </div>
+          <div>
+            <strong>What we measure</strong>
+            <p>Task quality, labelled-data budget, trainable parameters, training time, inference time, peak GPU memory, and model size.</p>
+          </div>
+          <div>
+            <strong>What we want to know</strong>
+            <p>When a lightweight method is good enough, and when heavier adaptation is worth the operational cost.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-row" aria-label="Research summary metrics">
+        <div class="metric-card">
+          <span class="metric-value">2</span>
+          <span class="metric-label">Research axes</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">3</span>
+          <span class="metric-label">Earth observation foundation models</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">72</span>
+          <span class="metric-label">Fields of The World Africa runs</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">1.36 GB</span>
+          <span class="metric-label">Peak memory for best field-boundary model</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shaded" id="framework">
+      <div class="section-heading">
+        <p class="eyebrow">Evaluation Harness</p>
+        <h2>Performance and deployability are measured together.</h2>
+      </div>
+
+      <div class="formula-panel">
+        <div>
+          <h3>Deployment-aware objective</h3>
+          <p>We compare strategies using a Pareto view rather than a single leaderboard:</p>
+          <p class="math">
+            {String.raw`\[
+              s^\* \in \mathrm{Pareto}\left(
+                \mathrm{TaskMetric}(s),
+                \mathrm{GPUTime}(s),
+                \mathrm{PeakMemory}(s),
+                \mathrm{Params}_{trainable}(s)
+              \right)
+            \]`}
+          </p>
+        </div>
+        <div>
+          <h3>Why this matters</h3>
+          <p>
+            A model that is slightly more accurate but requires much more memory, training time, or
+            engineering complexity may be a poor operational choice in resource-constrained climate
+            workflows.
+          </p>
+        </div>
+      </div>
+
+      <div class="pipeline" aria-label="Experiment pipeline">
+        <div class="pipeline-step">
+          <span>1</span>
+          <strong>African datasets</strong>
+          <p>Fields of The World (FTW) Africa and WeatherBench2 over the Greater Horn of Africa.</p>
+        </div>
+        <div class="pipeline-step">
+          <span>2</span>
+          <strong>Foundation models</strong>
+          <p>Prithvi Earth Observation (Prithvi-EO), TerraMind, and Aurora weather models.</p>
+        </div>
+        <div class="pipeline-step">
+          <span>3</span>
+          <strong>Adaptation</strong>
+          <p>Linear Probe, Linear Calibration / Model Output Statistics (MOS), and Low-Rank Adaptation (LoRA).</p>
+        </div>
+        <div class="pipeline-step">
+          <span>4</span>
+          <strong>Pareto analysis</strong>
+          <p>Task quality is plotted against deployment cost.</p>
+        </div>
+      </div>
+
+      <figure class="figure wide">
+        <img
+          src={asset("/assets/two_axis_framework.png")}
+          alt="Two-axis framework for Earth observation and weather forecasting experiments."
+        />
+        <figcaption>Two-axis framework: Earth observation adaptation and weather forecasting adaptation.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="experiments">
+      <div class="section-heading">
+        <p class="eyebrow">Experiments</p>
+        <h2>Two complementary model families, two African climate tasks.</h2>
+      </div>
+
+      <div class="experiment-grid">
+        <article class="experiment-card">
+          <div class="card-kicker">Axis 1</div>
+          <h3>Earth observation: field-boundary segmentation</h3>
+          <p>
+            Task: identify agricultural field boundaries from satellite imagery using Fields of The
+            World (FTW) Africa.
+          </p>
+          <dl>
+            <div><dt>Dataset</dt><dd>Fields of The World (FTW) Africa: Kenya, Rwanda, South Africa subset</dd></div>
+            <div><dt>Models</dt><dd>Prithvi Earth Observation 2.0 (Prithvi-EO-2.0) 300 million parameter model, TerraMind-1.0 Base, TerraMind-1.0 Large</dd></div>
+            <div><dt>Adaptation</dt><dd>Linear Probe and Low-Rank Adaptation (LoRA)</dd></div>
+            <div><dt>Label budgets</dt><dd>5%, 10%, 25%, 100%</dd></div>
+            <div><dt>Metrics</dt><dd>Foreground intersection over union (IoU), mean IoU, training time, peak GPU memory, trainable parameters</dd></div>
+          </dl>
+        </article>
+
+        <article class="experiment-card">
+          <div class="card-kicker">Axis 2</div>
+          <h3>Weather forecasting: regional short-range prediction</h3>
+          <p>
+            Task: evaluate weather forecasting performance over the Greater Horn of Africa using
+            WeatherBench2 validation initializations.
+          </p>
+          <dl>
+            <div><dt>Dataset</dt><dd>WeatherBench2 high-resolution deterministic forecast at initialization time (HRES T0), Greater Horn regional scoring</dd></div>
+            <div><dt>Models</dt><dd>Aurora Small and Aurora Large</dd></div>
+            <div><dt>Adaptation</dt><dd>Linear Calibration / Model Output Statistics (MOS) and Low-Rank Adaptation (LoRA) for Aurora Small</dd></div>
+            <div><dt>Lead times</dt><dd>6, 12, 24, and 48 hours</dd></div>
+            <div><dt>Metrics</dt><dd>Weighted root mean squared error (RMSE), weighted mean absolute error (MAE), relative RMSE, inference time, peak GPU memory</dd></div>
+          </dl>
+          <p class="status-note">
+            Status: complete. Frozen Aurora Small and Large baselines and Aurora Small adaptation
+            (Model Output Statistics and Low-Rank Adaptation) all passed the finite-metric validation
+            gate, evaluated with global model input and Greater Horn regional scoring.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shaded" id="results">
+      <div class="section-heading">
+        <p class="eyebrow">Results</p>
+        <h2>Cheap adaptation is often enough on Earth observation; on forecasting, scale still buys the accuracy.</h2>
+      </div>
+
+      <article class="result-block">
+        <div class="result-head">
+          <span class="result-number">1</span>
+          <h3>On Earth observation, a linear probe is a strong, low-cost adaptation baseline.</h3>
+        </div>
+        <p>
+          On Fields of The World (FTW) Africa field-boundary segmentation (Kenya, Rwanda, South
+          Africa), we adapt Prithvi Earth Observation 2.0 (Prithvi-EO-2.0) with a Linear Probe
+          (12,291 trainable parameters) and with Low-Rank Adaptation (LoRA; 3.7 million trainable
+          parameters). The Linear Probe reaches 0.350 foreground intersection-over-union (IoU) at
+          100% labels and 0.346 at 25% labels, matching its full-label accuracy from one quarter of
+          the annotations. LoRA peaks lower (0.333 at 25%, 0.319 at 100%) while using roughly 300&#215;
+          more trainable parameters and 3&#215; the peak accelerator memory (4.12 GB vs 1.36 GB).
+        </p>
+        <figure class="figure">
+          <img src={asset("/assets/fig_eo_label_efficiency.png")} alt="Foreground IoU versus label budget for Prithvi-EO-2.0 with Linear Probe and LoRA on FTW Africa; Linear Probe is at or above LoRA at every budget and flattens by 25% labels." />
+          <figcaption>FTW Africa: foreground IoU versus labelled-data budget for Prithvi-EO-2.0. Shaded bands show &#177;1 standard deviation across 3 seeds.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src={asset("/assets/fig_eo_pareto.png")} alt="Deployment Pareto frontier for FTW Africa: foreground IoU versus deployment cost (peak memory times training time) on a log scale, with Prithvi and TerraMind configurations and the non-dominated frontier highlighted." />
+          <figcaption>FTW Africa: deployment Pareto frontier. Cost is peak memory (GB) times training time (s); the frontier (diamonds) collects the non-dominated configurations. Low-cost linear probes sit on the frontier.</figcaption>
+        </figure>
+        <div class="finding">
+          <strong>Finding.</strong> A 12K-parameter linear probe matches its full-label accuracy using only 25% of labels and beats LoRA at roughly one three-hundredth of the trainable-parameter cost.
+        </div>
+      </article>
+
+      <article class="result-block">
+        <div class="result-head">
+          <span class="result-number">2</span>
+          <h3>On regional forecasting, the larger fine-tuned model is uniformly more accurate, at a steep footprint.</h3>
+        </div>
+        <p>
+          Over the Greater Horn of Africa (WeatherBench2 high-resolution analysis, 64 initializations
+          spanning January to June 2022), the fine-tuned Aurora Large (1.26 billion parameters)
+          attains lower area-weighted root mean squared error (RMSE) than Aurora Small (113 million
+          parameters) at every variable and every lead time. For 2m temperature, error is 0.70 K vs
+          1.02 K at 6 hours and 0.97 K vs 1.50 K at 48 hours, and both models beat a persistence
+          baseline. The gain is not free: Aurora Large uses about 11&#215; the parameters, 2.2&#215;
+          the peak inference memory (19.1 GB vs 8.7 GB), and roughly 4&#215; the inference time.
+        </p>
+        <figure class="figure wide">
+          <img src={asset("/assets/fig_aurora_scale.png")} alt="Weighted RMSE versus lead time for Aurora Small and Aurora Large across four surface variables; Large is below Small in every panel and at every lead time." />
+          <figcaption>WeatherBench2 Greater Horn: absolute weighted RMSE versus lead time. Error grows monotonically with lead; Aurora Large is more accurate on every variable. (Absolute RMSE is used as the primary metric; persistence is a diurnally phase-dependent reference and is reported only as a secondary skill score.)</figcaption>
+        </figure>
+        <div class="finding">
+          <strong>Finding.</strong> Model scale delivers a real, uniform accuracy gain in regional forecasting, but only teams that can afford roughly 11&#215; parameters and 2&#215; memory should pay for it.
+        </div>
+      </article>
+
+      <article class="result-block">
+        <div class="result-head">
+          <span class="result-number">3</span>
+          <h3>Cheap output calibration matches LoRA, and neither closes the gap to scale.</h3>
+        </div>
+        <p>
+          We adapt Aurora Small to the region two ways: Linear Calibration / Model Output Statistics
+          (MOS), a 32-parameter affine output correction fit only on the training split, and LoRA
+          (541,000 trainable parameters) trained for 64 steps. Both give only marginal gains over the
+          frozen model: mean RMSE relative to persistence improves from 0.498 (no adaptation) to
+          0.494 (MOS) and 0.489 (LoRA), and both remain far from Aurora Large (0.370). MOS and
+          LoRA are statistically comparable, yet LoRA costs about 17,000&#215; more trainable parameters
+          and roughly 60 GB of training memory, whereas MOS is a 32-parameter fit that adds no inference
+          cost. Under this light adaptation budget, LoRA's training loss barely moved, so we frame LoRA
+          as delivering marginal gains at high cost rather than as a failure of the method.
+        </p>
+        <figure class="figure">
+          <img src={asset("/assets/fig_aurora_adaptation.png")} alt="2m temperature weighted RMSE versus lead time for Aurora Small with no adaptation, MOS, and LoRA, plus Aurora Large; the three Small variants nearly overlap while Aurora Large sits well below." />
+          <figcaption>WeatherBench2 Greater Horn: 2m temperature RMSE for Aurora Small (frozen, +MOS, +LoRA) with Aurora Large as reference. The three compact-model variants nearly overlap.</figcaption>
+        </figure>
+        <div class="finding">
+          <strong>Finding.</strong> A 32-parameter output calibration matches LoRA at roughly one seventeen-thousandth of the trainable cost, so cheap adaptation is the better deployment choice, and neither adaptation substitutes for model scale.
+        </div>
+      </article>
+
+      <div class="table-wrap" role="region" aria-label="Summary result table" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Axis</th>
+              <th>Model / strategy</th>
+              <th>Task metric</th>
+              <th>Trainable parameters</th>
+              <th>Peak memory</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FTW Africa (EO)</td>
+              <td>Prithvi-EO-2.0 + Linear Probe (100% labels)</td>
+              <td>0.350 foreground IoU</td>
+              <td>12,291</td>
+              <td>1.36 GB</td>
+              <td>Best Pareto point for field-boundary segmentation.</td>
+            </tr>
+            <tr>
+              <td>FTW Africa (EO)</td>
+              <td>Prithvi-EO-2.0 + LoRA (100% labels)</td>
+              <td>0.319 foreground IoU</td>
+              <td>3,702,787</td>
+              <td>4.12 GB</td>
+              <td>More adaptation cost, no accuracy gain over the linear probe.</td>
+            </tr>
+            <tr>
+              <td>Greater Horn (forecasting)</td>
+              <td>Aurora Small (frozen)</td>
+              <td>0.498 rel. RMSE</td>
+              <td>0</td>
+              <td>8.7 GB</td>
+              <td>Compact, fast baseline that beats persistence.</td>
+            </tr>
+            <tr>
+              <td>Greater Horn (forecasting)</td>
+              <td>Aurora Small + MOS</td>
+              <td>0.494 rel. RMSE</td>
+              <td>32</td>
+              <td>8.7 GB</td>
+              <td>Cheapest adaptation; marginal gain, no inference overhead.</td>
+            </tr>
+            <tr>
+              <td>Greater Horn (forecasting)</td>
+              <td>Aurora Small + LoRA</td>
+              <td>0.489 rel. RMSE</td>
+              <td>540,672</td>
+              <td>8.7 GB inference (≈60 GB training)</td>
+              <td>Marginal gain over MOS at far higher training cost.</td>
+            </tr>
+            <tr>
+              <td>Greater Horn (forecasting)</td>
+              <td>Aurora Large (fine-tuned, frozen)</td>
+              <td>0.370 rel. RMSE</td>
+              <td>0</td>
+              <td>19.1 GB</td>
+              <td>Most accurate; large memory and model footprint.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Relative RMSE is the mean weighted RMSE divided by a persistence baseline, averaged over variables and lead times; lower is better and values below 1 beat persistence. Because persistence skill varies with diurnal phase, absolute RMSE (figures above) is the primary metric.</p>
+    </section>
+
+    <section class="section" id="discussion">
+      <div class="section-heading">
+        <p class="eyebrow">Discussion</p>
+        <h2>The point is not that small models always win. The point is to measure when scale is worth it.</h2>
+      </div>
+      <div class="text-grid">
+        <p>
+          On Fields of The World (FTW) Africa, Linear Probe is a strong baseline because it
+          produces competitive segmentation performance with a very small trainable head. Low-Rank
+          Adaptation (LoRA) increases the adaptation surface and memory footprint, but its value
+          depends on the model and label budget.
+        </p>
+        <p>
+          On WeatherBench2, Aurora Large gives stronger frozen forecasting performance than Aurora
+          Small, but at substantially higher memory and parameter cost. Cheap regional adaptation of
+          Aurora Small with output calibration (Model Output Statistics) or Low-Rank Adaptation
+          (LoRA) yields only marginal gains and does not close the gap to Aurora Large. Because
+          calibration matches LoRA at a tiny fraction of the cost, the practical recipe is a compact
+          model with cheap calibration when compute is constrained, and the larger model only where
+          its footprint is affordable and the accuracy is needed.
+        </p>
+      </div>
+    </section>
+
+    <section class="section shaded" id="references">
+      <div class="section-heading">
+        <p class="eyebrow">References</p>
+        <h2>Datasets, models, and methods behind the evaluation.</h2>
+      </div>
+      <div class="reference-grid">
+        <article class="reference-card">
+          <span>Dataset</span>
+          <h3>Fields of The World</h3>
+          <p>
+            Kerner et al. introduce Fields of The World (FTW) as a global agricultural
+            field-boundary segmentation benchmark spanning 24 countries across four continents.
+          </p>
+          <a href="https://arxiv.org/abs/2409.16252">Read the paper</a>
+        </article>
+        <article class="reference-card">
+          <span>Model</span>
+          <h3>Prithvi Earth Observation 2.0</h3>
+          <p>
+            Szwarcman et al. describe Prithvi Earth Observation 2.0 (Prithvi-EO-2.0) as a
+            multi-temporal Earth observation foundation model for geospatial downstream tasks.
+          </p>
+          <a href="https://arxiv.org/abs/2412.02732">Read the paper</a>
+        </article>
+        <article class="reference-card">
+          <span>Model</span>
+          <h3>TerraMind</h3>
+          <p>
+            Jakubik et al. present TerraMind as a generative multimodal Earth observation
+            foundation model with zero-shot and few-shot capabilities.
+          </p>
+          <a href="https://arxiv.org/abs/2504.11171">Read the paper</a>
+        </article>
+        <article class="reference-card">
+          <span>Model</span>
+          <h3>Aurora</h3>
+          <p>
+            Bodnar et al. introduce Aurora as a foundation model for Earth system prediction across
+            weather, air quality, waves, and other forecasting tasks.
+          </p>
+          <a href="https://arxiv.org/abs/2405.13063">Read the paper</a>
+        </article>
+        <article class="reference-card">
+          <span>Benchmark</span>
+          <h3>WeatherBench2</h3>
+          <p>
+            Rasp et al. provide an open benchmark and evaluation framework for data-driven global
+            weather forecasting models.
+          </p>
+          <a href="https://arxiv.org/abs/2308.15560">Read the paper</a>
+        </article>
+        <article class="reference-card">
+          <span>Method</span>
+          <h3>Low-Rank Adaptation</h3>
+          <p>
+            Hu et al. propose Low-Rank Adaptation (LoRA) as a parameter-efficient way to adapt
+            large pretrained models while freezing the base weights.
+          </p>
+          <a href="https://arxiv.org/abs/2106.09685">Read the paper</a>
+        </article>
+        <article class="reference-card">
+          <span>Data</span>
+          <h3>ERA5 Reanalysis</h3>
+          <p>
+            Hersbach et al. describe ERA5, the European Centre for Medium-Range Weather Forecasts
+            global atmospheric reanalysis dataset underlying many modern weather and climate model
+            evaluations.
+          </p>
+          <a href="https://doi.org/10.1002/qj.3803">Read the paper</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section code-callout-section">
+      <div class="code-callout">
+        <div>
+          <p class="eyebrow">Code And Harness</p>
+          <h2>Check GitHub for the experiment harness and codebase.</h2>
+          <p>
+            The repository contains the configuration files, dataset/model loaders, notebooks,
+            experiment runners, and analysis scripts used for this project.
+          </p>
+        </div>
+        <a class="button primary" href={githubUrl}>Open GitHub</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

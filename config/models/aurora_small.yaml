@@ -1,0 +1,45 @@
+model: aurora_small
+display_name: Aurora Small
+model_family: aurora
+is_foundation_model: true
+package_import: aurora
+hf_repo: microsoft/aurora
+checkpoint_file: aurora-0.25-small-pretrained.ckpt
+parameter_count_estimate: 112800000
+checkpoint_size_estimate: unknown
+machine_type: gpu_l4_or_better
+precision: bf16
+task_type: weather_forecasting
+modalities:
+  - atmospheric_state
+  - surface_state
+  - static_fields
+forecasting:
+  native_resolution_degrees: 0.25
+  input_time_steps: 2
+  output_step_hours: 6
+  known_public_size_note: >-
+    Aurora Small is treated as 112.8M parameters based on the South Africa
+    PEFT poster. Exact checkpoint size should be measured after loading the
+    package/weights in the active runtime.
+adaptation:
+  methods:
+    - pretrained
+    - lora
+  lora:
+    rank: 16
+    alpha: 4
+    target_modules: null
+selection_role: forecasting_adaptable_model
+selection_rationale: >-
+  Compact Earth-system foundation model suitable for regional PEFT experiments.
+  It gives the forecasting axis a practical low-compute model to compare against
+  Aurora Large while keeping the deployment-readiness theme.
+integration_priority: 1
+integration_status: config_ready_package_required
+notes: >-
+  The harness checks for an importable Aurora package and will not fabricate
+  Aurora predictions if the package/weights are unavailable. Aurora's public
+  Hugging Face repo exposes aurora-0.25-small-pretrained.ckpt for the compact
+  model; the HRES T0 fine-tuned checkpoint is available for the full Aurora
+  model.

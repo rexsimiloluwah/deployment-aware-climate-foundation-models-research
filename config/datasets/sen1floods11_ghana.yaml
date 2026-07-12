@@ -1,0 +1,45 @@
+name: sen1floods11_ghana
+display_name: Sen1Floods11 Ghana
+region: Ghana
+climate_theme: Disaster response and humanitarian flood mapping
+task_type: segmentation
+num_classes: 2
+class_names:
+  - not_flood
+  - flood
+input:
+  sensor: Sentinel-2
+  shape: [13, 512, 512]
+  expected_layout: channels_height_width
+  description: Ghana hand-labeled Sen1Floods11 Sentinel-2 image/mask pairs loaded directly from Hugging Face.
+data:
+  loader: hf_sen1floods11
+  hf_repo: KozaMateusz/sen1floods11
+  hf_repo_type: dataset
+  country: Ghana
+  image_group: S2Hand
+  label_group: LabelHand
+  max_items: null
+  cache_dir: data/hf_cache/sen1floods11_ghana
+  allow_synthetic_fallback: false
+splits:
+  train: train
+  val: val
+  test: test
+split_fractions:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+metrics:
+  primary: iou
+  secondary: [pixel_accuracy]
+eda:
+  key_questions:
+    - What fraction of pixels are flooded in the Ghana subset?
+    - Are Sentinel-2 image/mask pairs aligned and visually plausible?
+    - Are low label-budget subsets dominated by non-flood pixels?
+    - Does the task support a clear disaster-response climate resilience story?
+readiness:
+  status: hf_loader_ready
+  required_access:
+    - Hugging Face network access

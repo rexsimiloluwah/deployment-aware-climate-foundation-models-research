@@ -1,0 +1,57 @@
+name: ftw_africa
+display_name: Fields of the Planet Africa
+region: Kenya, Rwanda, South Africa
+climate_theme: Food security and agricultural field-boundary mapping
+task_type: segmentation
+num_classes: 3
+class_names:
+  - background
+  - field_interior
+  - field_boundary
+input:
+  sensor: PlanetScope surface reflectance
+  shape: [8, 512, 512]
+  expected_layout: channels_height_width
+  description: Two seasonal 4-band PlanetScope windows stacked as 8 channels with FTW field-boundary labels.
+data:
+  loader: hf_ftw_planet
+  hf_repo: taylor-geospatial/ftw-planet
+  hf_repo_type: dataset
+  countries:
+    - kenya
+    - rwanda
+    - south_africa
+  windows:
+    - window_a
+    - window_b
+  output_size: [512, 512]
+  normalize_scale: 10000.0
+  split_seed: 1234
+  max_items_per_country: null
+  cache_dir: data/hf_cache/ftw_africa
+  allow_synthetic_fallback: false
+splits:
+  train: train
+  val: val
+  test: test
+split_fractions:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+metrics:
+  primary: iou
+  secondary: [pixel_accuracy, boundary_iou]
+eda:
+  key_questions:
+    - How imbalanced are background, field interior, and boundary pixels?
+    - Which country contributes most samples?
+    - Are seasonal windows visually plausible and cloud-free enough?
+    - Does field-boundary segmentation provide a strong food-security benchmark?
+readiness:
+  status: hf_loader_ready
+  required_access:
+    - Hugging Face network access
+  downloaded_shards:
+    - dataset/kenya.tar
+    - dataset/rwanda.tar
+    - dataset/south_africa.tar

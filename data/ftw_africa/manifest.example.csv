@@ -1,0 +1,5 @@
+id,split,image_path,mask_path,country,continent
+patch_0001,train,images/patch_0001.npy,masks/patch_0001.npy,Kenya,Africa
+patch_0002,val,images/patch_0002.npy,masks/patch_0002.npy,Ethiopia,Africa
+patch_0003,test,images/patch_0003.npy,masks/patch_0003.npy,Rwanda,Africa
+

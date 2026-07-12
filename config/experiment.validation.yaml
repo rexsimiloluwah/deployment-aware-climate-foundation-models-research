@@ -1,0 +1,25 @@
+run_id: validation
+seed: 1234
+device: auto
+
+datasets:
+  - sen1floods11_ghana
+
+models:
+  - smoke_toy
+
+adaptation:
+  methods:
+    - linear_probe
+    - lora
+  lora:
+    rank: 8
+    alpha: 16
+    dropout: 0.05
+
+label_budgets: [0.10, 1.00]
+max_epochs: 1
+batch_size: 8
+num_workers: 0
+limit_train_batches: 4
+limit_val_batches: 2

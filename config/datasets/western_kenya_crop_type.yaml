@@ -1,0 +1,53 @@
+name: western_kenya_crop_type
+display_name: Western Kenya Crop Type
+region: Western Kenya
+climate_theme: Food security and smallholder agricultural monitoring
+task_type: classification
+num_classes: 4
+class_names:
+  - maize
+  - cassava
+  - beans
+  - intercrop_or_other
+input:
+  sensor: Sentinel-2
+  shape: [12, 10]
+  expected_layout: time_features
+  description: Multitemporal spectral crop-field features. Real loader expects one row per field in a manifest, with an array path and crop label.
+data:
+  root: data/western_kenya_crop_type
+  loader: manifest_array
+  manifest: manifest.csv
+  array_column: array_path
+  label_column: label
+  id_column: id
+  split_column: split
+  allow_synthetic_fallback: false
+splits:
+  train: train
+  val: val
+  test: test
+metrics:
+  primary: macro_f1
+  secondary: [accuracy]
+eda:
+  key_questions:
+    - Are classes severely imbalanced across train/val/test?
+    - Are minority crops preserved under 5%, 10%, and 25% label budgets?
+    - Do temporal-spectral profiles separate crop types enough for linear probing?
+    - Are there split artifacts that would make evaluation too optimistic?
+readiness:
+  status: not_ready
+  blockers:
+    - Real manifest file is not present yet.
+    - Real train/val/test split has not been audited.
+    - Real class balance and label-budget coverage have not been computed.
+    - Real temporal-spectral visualizations have not been inspected.
+  required_files:
+    - data/western_kenya_crop_type/manifest.csv
+  manifest_schema:
+    required_columns:
+      - id
+      - split
+      - array_path
+      - label
