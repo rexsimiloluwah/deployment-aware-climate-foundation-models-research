@@ -1,0 +1,270 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Data Audit | Deployable Earth Foundation Models";
+const description =
+  "Dataset cards, split validation, and data-quality audit notes for the FTW Africa and WeatherBench2 Greater Horn experiments.";
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const page = (path: string) => `${base}${path.replace(/^\//, "")}`;
+const githubUrl = "https://github.com/rexsimiloluwah/deployment-aware-climate-foundation-models-research";
+---
+
+<BaseLayout title={title} description={description}>
+  <main id="top">
+    <section class="subpage-hero">
+      <p class="hero-kicker">Dataset cards, split validation, and quality checks</p>
+      <h1>Data Audit</h1>
+      <p class="lead">
+        A deployment-aware model comparison only makes sense if the data is documented clearly:
+        what is being predicted, where the data comes from, how train/validation/test sets are
+        constructed, and which data-quality risks could affect the results.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href={page("/")}>Back Home</a>
+        <a class="button" href={githubUrl}>GitHub</a>
+      </div>
+    </section>
+
+    <nav class="section-nav" aria-label="Data audit sections">
+      <a href="#overview">Overview</a>
+      <a href="#ftw">Fields of The World Africa</a>
+      <a href="#weatherbench">WeatherBench2</a>
+      <a href="#split-validation">Split Validation</a>
+    </nav>
+
+    <section class="section" id="overview">
+      <div class="section-heading">
+        <p class="eyebrow">Overview</p>
+        <h2>Two datasets, two different validation problems.</h2>
+      </div>
+      <div class="audit-summary-grid">
+        <article class="audit-summary-card">
+          <span class="badge">Earth observation</span>
+          <h3>Fields of The World Africa</h3>
+          <p>
+            A field-boundary segmentation task over African agricultural landscapes. The main
+            validation risks are class imbalance, empty or near-empty masks, country imbalance, and
+            accidental geographic overlap across train, validation, and test sets.
+          </p>
+        </article>
+        <article class="audit-summary-card">
+          <span class="badge">Weather forecasting</span>
+          <h3>WeatherBench2 Greater Horn</h3>
+          <p>
+            A temporal forecasting task scored over the Greater Horn of Africa. The main validation
+            risks are time leakage, seasonal imbalance, missing values, and inconsistent regional
+            scoring across models.
+          </p>
+        </article>
+      </div>
+      <div class="finding">
+        <strong>Audit principle.</strong> The current project treats the data audit as part of the
+        research result, not just preprocessing. Dataset quality, train/validation/test construction,
+        and missingness determine how far the deployment conclusions can be trusted.
+      </div>
+    </section>
+
+    <section class="section shaded" id="ftw">
+      <div class="section-heading">
+        <p class="eyebrow">Dataset Card</p>
+        <h2>Fields of The World Africa</h2>
+      </div>
+
+      <div class="dataset-card">
+        <div class="dataset-card-main">
+          <h3>What this dataset is used for</h3>
+          <p>
+            Fields of The World Africa is used for agricultural field-boundary segmentation. The
+            model receives satellite image patches and predicts a three-class mask:
+            background, field interior, and field boundary.
+          </p>
+        </div>
+        <dl class="dataset-facts">
+          <div><dt>Source</dt><dd><a href="https://huggingface.co/datasets/taylor-geospatial/ftw-planet">taylor-geospatial/ftw-planet</a></dd></div>
+          <div><dt>Task</dt><dd>Semantic segmentation</dd></div>
+          <div><dt>Climate relevance</dt><dd>Food security and agricultural monitoring</dd></div>
+          <div><dt>Countries used</dt><dd>Kenya, Rwanda, South Africa</dd></div>
+          <div><dt>Input</dt><dd>8-channel PlanetScope surface reflectance</dd></div>
+          <div><dt>Spatial resolution</dt><dd>3 m PlanetScope imagery</dd></div>
+          <div><dt>Patch shape</dt><dd>8 × 512 × 512</dd></div>
+          <div><dt>Approx. patch footprint</dt><dd>1.54 km × 1.54 km at 3 m resolution</dd></div>
+          <div><dt>Labels</dt><dd>background, field interior, field boundary</dd></div>
+          <div><dt>Configured split</dt><dd>70% train, 15% validation, 15% test; seed 1234</dd></div>
+          <div><dt>Observed full-label train size</dt><dd>796 examples in completed FTW Africa runs</dd></div>
+          <div><dt>Label budgets tested</dt><dd>5%, 10%, 25%, 100% of training labels</dd></div>
+        </dl>
+      </div>
+
+      <div class="audit-visual-grid">
+        <figure class="audit-plot">
+          <figcaption>Configured FTW Africa split fractions</figcaption>
+          <div class="stacked-bar" aria-label="70 percent training, 15 percent validation, 15 percent test">
+            <span class="train" style="width: 70%">Train 70%</span>
+            <span class="val" style="width: 15%">Val 15%</span>
+            <span class="test" style="width: 15%">Test 15%</span>
+          </div>
+          <p>
+            The completed full-label experiments observed 796 training examples. Exact validation
+            and test counts should be reported from the final dataset manifest.
+          </p>
+        </figure>
+        <figure class="audit-plot">
+          <figcaption>FTW Africa labelled-data budgets</figcaption>
+          <div class="bar-plot" aria-label="Label budget sample counts">
+            <div><span>5%</span><strong style="width: 5%">40</strong></div>
+            <div><span>10%</span><strong style="width: 10%">80</strong></div>
+            <div><span>25%</span><strong style="width: 25%">199</strong></div>
+            <div><span>100%</span><strong style="width: 100%">796</strong></div>
+          </div>
+          <p>
+            These are observed training subset sizes from the completed FTW Africa experiment logs.
+          </p>
+        </figure>
+      </div>
+
+      <p class="dataset-note">
+        Main audit concern: field-boundary segmentation can be sensitive to boundary-pixel
+        imbalance, empty masks, country imbalance, and geographic overlap across train,
+        validation, and test sets.
+      </p>
+    </section>
+
+    <section class="section" id="weatherbench">
+      <div class="section-heading">
+        <p class="eyebrow">Dataset Card</p>
+        <h2>WeatherBench2 over the Greater Horn of Africa</h2>
+      </div>
+
+      <div class="dataset-card">
+        <div class="dataset-card-main">
+          <h3>What this dataset is used for</h3>
+          <p>
+            WeatherBench2 is used for short-range regional forecasting. Aurora receives global
+            atmospheric inputs, then predictions are cropped and scored over the Greater Horn of
+            Africa. This avoids limited-area boundary artifacts while keeping the evaluation
+            region African and climate-relevant.
+          </p>
+        </div>
+        <dl class="dataset-facts">
+          <div><dt>Source</dt><dd><a href="https://sites.research.google/weatherbench/">WeatherBench2</a></dd></div>
+          <div><dt>Configured data</dt><dd>HRES T0 global analysis</dd></div>
+          <div><dt>Grid resolution</dt><dd>0.25° latitude/longitude grid</dd></div>
+          <div><dt>Approx. grid spacing</dt><dd>~28 km north-south; east-west spacing varies with latitude</dd></div>
+          <div><dt>Task</dt><dd>Short-range deterministic forecasting</dd></div>
+          <div><dt>Region scored</dt><dd>Greater Horn of Africa</dd></div>
+          <div><dt>Latitude bounds</dt><dd>-12° to 23°</dd></div>
+          <div><dt>Longitude bounds</dt><dd>21° to 52°</dd></div>
+          <div><dt>Train split</dt><dd>2020-01-01 to 2021-12-31</dd></div>
+          <div><dt>Validation split</dt><dd>2022-01-01 to 2022-06-30</dd></div>
+          <div><dt>Test split</dt><dd>2022-07-01 to 2022-12-31</dd></div>
+          <div><dt>Lead times evaluated</dt><dd>6, 12, 24, and 48 hours in the current result page</dd></div>
+          <div><dt>Surface variables</dt><dd>2m temperature, 10m wind components, mean sea-level pressure</dd></div>
+          <div><dt>Static fields</dt><dd>ERA5 geopotential, land-sea mask, soil type</dd></div>
+        </dl>
+      </div>
+
+      <div class="audit-visual-grid">
+        <figure class="audit-plot wide-plot">
+          <figcaption>WeatherBench2 temporal split used in this project</figcaption>
+          <div class="timeline-plot" aria-label="Train 2020 to 2021, validation January to June 2022, test July to December 2022">
+            <div class="timeline-axis">
+              <span>2020</span>
+              <span>2021</span>
+              <span>Jan-Jun 2022</span>
+              <span>Jul-Dec 2022</span>
+            </div>
+            <div class="timeline-bar">
+              <span class="train" style="width: 66.7%">Train</span>
+              <span class="val" style="width: 16.65%">Validation</span>
+              <span class="test" style="width: 16.65%">Test</span>
+            </div>
+          </div>
+          <p>
+            This is a chronological split, not a random split. It prevents future weather states
+            from appearing in the training period used for regional adaptation.
+          </p>
+        </figure>
+        <figure class="audit-plot">
+          <figcaption>Greater Horn scoring window</figcaption>
+          <div class="region-box" aria-label="Latitude minus 12 to 23 degrees, longitude 21 to 52 degrees">
+            <div><strong>Latitude</strong><span>-12° to 23°</span></div>
+            <div><strong>Longitude</strong><span>21° to 52°</span></div>
+            <div><strong>Grid</strong><span>0.25°</span></div>
+          </div>
+          <p>
+            Aurora is run with global inputs; predictions and targets are then cropped to this
+            regional window for scoring.
+          </p>
+        </figure>
+      </div>
+
+      <p class="dataset-note">
+        Main audit concern: the validation period currently covers January to June 2022, so
+        seasonal coverage, missing values by variable, and subregional performance should be
+        reported before making stronger operational claims.
+      </p>
+    </section>
+
+    <section class="section shaded" id="split-validation">
+      <div class="section-heading">
+        <p class="eyebrow">Split Validation</p>
+        <h2>How train, validation, and test sets are separated.</h2>
+      </div>
+
+      <div class="table-wrap" role="region" aria-label="Split validation report" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Dataset</th>
+              <th>Split rule used</th>
+              <th>Validated evidence</th>
+              <th>Remaining leakage check</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fields of The World Africa</td>
+              <td>Deterministic 70% train, 15% validation, 15% test split with seed 1234.</td>
+              <td>
+                Completed runs use real FTW Planet data with synthetic fallback disabled. Full-label
+                training size is observed as 796 examples; label budgets map to 40, 80, 199, and
+                796 training examples.
+              </td>
+              <td>
+                Spatial leakage still needs explicit reporting: check whether related locations,
+                tiles, or source scenes appear across train, validation, and test sets. Also report
+                country counts for each split.
+              </td>
+            </tr>
+            <tr>
+              <td>WeatherBench2 Greater Horn</td>
+              <td>
+                Temporal split: train 2020-01-01 to 2021-12-31, validation 2022-01-01 to
+                2022-06-30, test 2022-07-01 to 2022-12-31.
+              </td>
+              <td>
+                Split is time-based rather than random. The model receives global input fields and
+                all models are scored over the same Greater Horn latitude/longitude window.
+              </td>
+              <td>
+                Report initialization counts by month and season, then compare wet-season and
+                dry-season performance. This checks whether the validation slice over-represents a
+                seasonal regime.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="finding">
+        <strong>Current split-validation verdict.</strong> WeatherBench2 has the cleaner validation
+        design because train, validation, and test periods are separated chronologically. FTW Africa
+        is usable for the current adaptation comparison, but a stronger deployment claim should
+        include a geographic overlap audit by country, tile, and source scene.
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>

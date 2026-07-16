@@ -8,6 +8,7 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const asset = (path: string) => `${base}${path.replace(/^\//, "")}`;
+const page = (path: string) => `${base}${path.replace(/^\//, "")}`;
 const githubUrl = "https://github.com/rexsimiloluwah/deployment-aware-climate-foundation-models-research";
 ---
 
@@ -73,6 +74,7 @@ const githubUrl = "https://github.com/rexsimiloluwah/deployment-aware-climate-fo
     <nav class="section-nav" aria-label="Research page sections">
       <a href="#question">Research Question</a>
       <a href="#framework">Framework</a>
+      <a href="#data">Data</a>
       <a href="#experiments">Experiments</a>
       <a href="#results">Results</a>
       <a href="#discussion">Discussion</a>
@@ -187,6 +189,25 @@ const githubUrl = "https://github.com/rexsimiloluwah/deployment-aware-climate-fo
         />
         <figcaption>Two-axis framework: Earth observation adaptation and weather forecasting adaptation.</figcaption>
       </figure>
+    </section>
+
+    <section class="section" id="data">
+      <div class="section-heading">
+        <p class="eyebrow">Data</p>
+        <h2>The evaluation starts with dataset transparency.</h2>
+      </div>
+      <div class="data-callout">
+        <div>
+          <h3>Dataset cards and audit checks</h3>
+          <p>
+            The data audit page summarizes the two datasets used in the project, their tasks,
+            regions, split discipline, input structure, known quality risks, and pending checks.
+            This is where the work stays honest about class imbalance, temporal leakage,
+            missing values, and the limits of the current evidence.
+          </p>
+        </div>
+        <a class="button primary" href={page("/data-audit/")}>Open Data Audit</a>
+      </div>
     </section>
 
     <section class="section" id="experiments">
